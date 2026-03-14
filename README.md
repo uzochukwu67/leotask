@@ -111,14 +111,14 @@ BLOCK_INTERVAL=15000           # polling interval in ms
 
 ## Roadmap
 
-### ✅ v1 — Scheduled ALEO Transfer (current)
+### ✅ v1 — Scheduled ALEO Transfer (complete)
 - Single ALEO transfer scheduled at a future block
 - On-chain escrow via public credits mapping
 - Keeper bot auto-execution
 - Frontend with Shield + Leo wallet support
 - Cancel & refund before execution
 
-### 🔜 v2 — Multi-Token Support
+### 🚧 v2 — Multi-Token Support (in progress)
 - Schedule transfers for any ARC-20 / token-registry token (USDC, USDT, wBTC, etc.)
 - Token balance display and approval flow in frontend
 - Keeper supports multi-token task execution
