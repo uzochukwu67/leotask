@@ -2,10 +2,14 @@ import { useWallet } from '@provablehq/aleo-wallet-adaptor-react';
 import { WalletMultiButton } from '@provablehq/aleo-wallet-adaptor-react-ui';
 import { truncateAddress, formatAleo } from '@/utils/aleo';
 import { useBalance } from '@/hooks/useBalance';
+import { useNavigate } from 'react-router-dom';
 
 export function Header() {
   const { connected, address } = useWallet();
   const { publicBalance, loading, refresh } = useBalance();
+  // use router to navigate to schedule page
+  const navigate = useNavigate();
+
 
   return (
     <header className="border-b border-zkperp-border bg-zkperp-card sticky top-0 z-50">
@@ -24,6 +28,10 @@ export function Header() {
 
           {/* Right side */}
           <div className="flex items-center gap-3">
+            {/* route to schedule */}
+            <button onClick={() => navigate('/schedule')} className="text-gray-400 hover:text-white transition-colors">
+              Schedule
+            </button>
             {/* Network badge */}
             <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-zkperp-dark rounded-full border border-zkperp-border">
               <div className="w-1.5 h-1.5 bg-zkperp-green rounded-full animate-pulse" />

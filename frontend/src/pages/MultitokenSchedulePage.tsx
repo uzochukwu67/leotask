@@ -98,7 +98,7 @@ function MtTaskCard({ task, currentBlock }: { task: MtTask; currentBlock: number
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export function MultitokenSchedulePage() {
-  const { connected , requestRecords, requestTransactionHistory, wallet} = useWallet();
+  const { connected , requestRecords, requestTransactionHistory} = useWallet();
   const { publicBalance } = useBalance();
   const { execute, status, tempTxId, onChainTxId, error, reset } = useTransaction();
   const { health, tasks, refresh } = useMultitokenBot();

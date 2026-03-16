@@ -13,7 +13,7 @@ export const KNOWN_TOKENS: { label: string; tokenId: string; decimals: number }[
   // Add more: { label: 'wBTC', tokenId: '...field', decimals: 8 },
 ];
 
-export const MT_BOT_API = 'http://localhost:3003';
+export const MT_BOT_API = 'https://precise-bettina-dabny-2ed5e02e.koyeb.app';
 // ──────────────────────────────────────────────────────────────────────────────
 
 export const NETWORK_CONFIG = {
@@ -23,7 +23,7 @@ export const NETWORK_CONFIG = {
 } as const;
 
 // Keeper bot runs locally
-export const BOT_API = 'http://localhost:3001';
+export const BOT_API = 'https://precise-bettina-dabny-2ed5e02e.koyeb.app';
 
 // ~10 seconds per block on Aleo testnet
 export const SECONDS_PER_BLOCK = 10;

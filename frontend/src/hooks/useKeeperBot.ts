@@ -35,6 +35,7 @@ export function useKeeperBot() {
 
       if (healthRes.ok) {
         const h = await healthRes.json();
+        console.log('Keeper Bot Health:', h);
         setHealth({
           online: true,
           currentBlock: parseInt(h.currentBlock || '0'),
