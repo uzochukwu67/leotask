@@ -1,0 +1,46 @@
+# Docker Compose for Koyeb Deployment
+# ==================================
+# Usage:
+#   1. Set environment variables in .env file or Koyeb dashboard
+#   2. Build: docker build -t nexora-keeper .
+#   3. Run: docker run -p 3002:3002 --env-file .env.nexora nexora-keeper
+
+version: '3.8'
+
+services:
+  keeper-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nexora-keeper:latest
+    container_name: nexora-keeper
+    restart: unless-stopped
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=production
+      # Required environment variables (set in Koyeb dashboard or .env file)
+      - PRIVATE_KEY=${PRIVATE_KEY}
+      - PROVABLE_API_KEY=${PROVABLE_API_KEY}
+      - PROVABLE_CONSUMER_ID=${PROVABLE_CONSUMER_ID}
+      - PROVABLE_UUID=${PROVABLE_UUID}
+      - PROGRAM_ID=nexora_bonded_marketplace.aleo
+      - NETWORK=testnet
+      - NETWORK_ID=1
+      - API_ENDPOINT=https://api.explorer.provable.com/v1/testnet
+      - QUERY_ENDPOINT=https://api.explorer.provable.com/v1
+      - BROADCAST_ENDPOINT=https://api.explorer.provable.com/v1/testnet/transaction/broadcast
+      - SCAN_INTERVAL_MS=30000
+      - API_PORT=3002
+      - SNARKOS_PATH=/usr/local/bin/aleo
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

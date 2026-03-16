@@ -10,23 +10,30 @@ import '@provablehq/aleo-wallet-adaptor-react-ui/dist/styles.css';
 
 import { Header } from '@/components/Header';
 import { SchedulePage } from '@/pages/SchedulePage';
+import { MultitokenSchedulePage } from '@/pages/MultitokenSchedulePage';
 
 function App() {
   return (
     <BrowserRouter>
       <AleoWalletProvider
-        wallets={[new ShieldWalletAdapter(), new LeoWalletAdapter()]}
+        wallets={[new ShieldWalletAdapter({}), new LeoWalletAdapter()]}
         autoConnect={false}
         network={Network.TESTNET}
-        decryptPermission={DecryptPermission.UponRequest}
-        programs={['automation_scheduled_transferv3.aleo', 'credits.aleo']}
+        decryptPermission={DecryptPermission.OnChainHistory}
+        programs={[
+          'automation_scheduled_transferv3.aleo',
+          'schedule_multitoken.aleo',
+          'credits.aleo',
+          'token_registry.aleo',
+        ]}
         onError={(error) => console.error(error.message)}
       >
         <WalletModalProvider>
           <div className="min-h-screen bg-zkperp-dark">
             <Header />
             <Routes>
-              <Route path="/" element={<SchedulePage />} />
+              <Route path="/"         element={<SchedulePage />} />
+              <Route path="/schedule" element={<MultitokenSchedulePage />} />
             </Routes>
           </div>
         </WalletModalProvider>

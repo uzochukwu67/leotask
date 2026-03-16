@@ -1,0 +1,16 @@
+{
+  "program": "recurring_task.aleo",
+  "version": "0.1.0",
+  "description": "",
+  "license": "MIT",
+  "leo": "3.4.0",
+ "dependencies": [
+    {
+      "name": "token_registry.aleo",
+      "location": "network",
+      "path": null,
+      "edition": 1
+    }
+  ],
+  "dev_dependencies": null
+}

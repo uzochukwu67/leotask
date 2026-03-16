@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { useWallet } from '@provablehq/aleo-wallet-adaptor-react';
+import { useWallet, } from '@provablehq/aleo-wallet-adaptor-react';
 import { useTransaction } from '@/hooks/useTransaction';
 import { useKeeperBot, type BotTask } from '@/hooks/useKeeperBot';
 import { useBalance } from '@/hooks/useBalance';

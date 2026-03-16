@@ -16,7 +16,7 @@ interface TransactionState {
 }
 
 export function useTransaction() {
-  const { executeTransaction, transactionStatus, connected, address } = useWallet();
+  const { executeTransaction, transactionStatus, connected, address, requestRecords, wallet } = useWallet();
   
   const [state, setState] = useState<TransactionState>({
     status: 'idle',
@@ -123,7 +123,7 @@ export function useTransaction() {
 
     try {
       console.log('[TX] Executing:', options.program, options.function, options.inputs);
-      const result = await executeTransaction(options);
+      const result = await wallet?.adapter.executeTransaction(options);
       
       const tempId = result?.transactionId || null;
       console.log('[TX] Submitted, temp ID:', tempId);
