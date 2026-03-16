@@ -368,20 +368,55 @@ async function scanAndProcess() {
     log('SCAN', `Scanner returned ${rawRecords.length} unspent TaskNotification(s)`);
 
     for (const rec of rawRecords) {
-      // Decrypt ciphertext using keeper's private key via SDK
+      log('SCANNER', `  Found record: ${rec.record_name} (block: ${rec.block_height}, spent: ${rec.spent})`);
+      
+      // Try to get plaintext - scanner may return it, or we need to decrypt
       let plaintextStr;
       try {
-        const decrypted = keeperAccount.decryptRecord(rec.record_ciphertext);
-        plaintextStr = decrypted.toString();
+        // First check if scanner already decrypted it
+        if (rec.record_plaintext) {
+          plaintextStr = rec.record_plaintext;
+          log('SCANNER', `    -> Using scanner-provided plaintext`);
+        } else if (rec.record_ciphertext) {
+          // Decrypt the ciphertext using the keeper account
+          log('SCANNER', `    -> Attempting to decrypt ciphertext...`);
+          
+          // Debug: log account info
+          console.log('[DEBUG] keeperAccount type:', typeof keeperAccount);
+          console.log('[DEBUG] decryptRecord exists:', typeof keeperAccount?.decryptRecord);
+          console.log('[DEBUG] ciphertext length:', rec.record_ciphertext?.length);
+          
+          const plaintext = keeperAccount.decryptRecord(rec.record_ciphertext);
+          console.log('[DEBUG] decrypted result:', plaintext);
+          console.log('[DEBUG] decrypted type:', typeof plaintext);
+          
+          if (plaintext) {
+            plaintextStr = plaintext.toString();
+            log('SCANNER', `    -> Decrypted from ciphertext`);
+          } else {
+            err('SCANNER', `    -> decryptRecord returned null/undefined!`);
+            continue;
+          }
+        } else {
+          err('SCANNER', `    -> No plaintext or ciphertext found!`);
+          continue;
+        }
       } catch (e) {
-        err('DECRYPT', `Failed on ${rec.record_ciphertext?.substring(0, 40)}: ${e.message}`);
+        err('SCANNER', `Failed to decrypt: ${e.message}`);
         continue;
       }
-      console.log('[DEBUG] record plaintext:', plaintextStr.substring(0, 300));
+
+      if (!plaintextStr) {
+        err('SCANNER', `    -> No plaintext for record: ${rec.transaction_id}`);
+        continue;
+      }
+      
+      log('SCANNER', `    -> Raw plaintext: ${plaintextStr.substring(0, 100)}...`);
 
       const plain  = parsePlaintext(plaintextStr || '');
+      log('SCANNER', `    -> Parsed: ${JSON.stringify(plain).substring(0, 100)}...`);
+      
       const taskId = plain.task_id;
-      console.log('[DEBUG] parsed fields:', JSON.stringify(plain));
       if (!taskId) { err('PARSE', `No task_id in: ${plaintextStr}`); continue; }
 
       // Skip already executed tasks (persisted across restarts)

@@ -14,6 +14,7 @@ import {
 
 
 
+
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const DELAY_PRESETS = [
@@ -98,11 +99,13 @@ function MtTaskCard({ task, currentBlock }: { task: MtTask; currentBlock: number
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export function MultitokenSchedulePage() {
-  const { connected , requestRecords, requestTransactionHistory} = useWallet();
+  const { connected , requestRecords, requestTransactionHistory, wallet} = useWallet();
+  
   const { publicBalance } = useBalance();
   const { execute, status, tempTxId, onChainTxId, error, reset } = useTransaction();
   const { health, tasks, refresh } = useMultitokenBot();
 
+  
   // Token type
   const [tokenType, setTokenType] = useState<'aleo' | 'arc20'>('aleo');
 
@@ -142,7 +145,12 @@ export function MultitokenSchedulePage() {
   const isSubmitting = status === 'submitting' || status === 'pending';
 
   const handleSchedule = async () => {
+    const dataRecord = await wallet?.adapter.requestRecords("schedule_multitoken.aleo", false)
     
+    console.log("Data record is ")
+    console.log(dataRecord)
+
+
     if (!canSubmit) return;
     reset();
     taskIdRef.current = randomField();
@@ -182,9 +190,9 @@ export function MultitokenSchedulePage() {
 
 
   useEffect(()=>{
-    requestRecords("schedule_multitoken.aleo", true)
+    requestRecords("schedule_multitoken.aleo", false)
       .then((data)=>{
-        
+        console.log("Records gotten is ")
         console.log(data)
       })
 

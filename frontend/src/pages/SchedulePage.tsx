@@ -153,7 +153,7 @@ export function SchedulePage() {
 
         {/* Page header */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-white">Schedule a Transfer</h2>
+          <h2 className="text-2xl font-bold text-white">Schedule a Transfer (Note go to schedule page for better experience)</h2>
           <p className="text-gray-400 mt-1 text-sm">
             Escrow ALEO now, execute automatically at a future block. Powered by the Leotask keeper.
           </p>
