@@ -40,6 +40,11 @@ function TaskCard({ task, currentBlock }: { task: BotTask; currentBlock: number 
       {/* Header row */}
       <div className="flex items-start justify-between gap-2 mb-3">
         <div className="flex-1 min-w-0">
+          {/* h1 warning pls use schedule page this is v1 */}
+          <h1 className="text-sm font-semibold text-white flex items-center gap-2">
+            <span className="w-6 h-6 rounded-lg bg-zkperp-accent/20 flex items-center justify-center text-zkperp-accent text-xs">⚡</span>
+            Scheduled Transfer use schedule page for better experience
+          </h1>
           <p className="text-xs text-gray-500 font-mono truncate">{task.taskId}</p>
           <div className="flex items-center gap-1.5 mt-0.5">
             <span className="text-gray-400 text-xs">→</span>
