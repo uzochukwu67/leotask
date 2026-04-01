@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(leo build:*)",
+      "Bash(leo deploy:*)"
+    ]
+  }
+}

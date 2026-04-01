@@ -1,12 +1,18 @@
 {
-  "program": "automation_scheduled_transferv3.aleo",
+  "program": "automation_advanced_transfer_v5.aleo",
   "version": "0.1.0",
-  "description": "Scheduled transfer automation on Aleo - trigger is public, amount is private",
+  "description": "Scheduled transfer automation on Aleo - supports native ALEO and USDCx",
   "license": "MIT",
-  "leo": "3.4.0",
+  "leo": "3.5.0",
   "dependencies": [
     {
       "name": "token_registry.aleo",
+      "location": "network",
+      "path": null,
+      "edition": 1
+    },
+    {
+      "name": "test_usdcx_stablecoin.aleo",
       "location": "network",
       "path": null,
       "edition": 1
