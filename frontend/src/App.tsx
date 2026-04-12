@@ -1,37 +1,32 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AleoWalletProvider } from '@provablehq/aleo-wallet-adaptor-react';
-import { WalletModalProvider } from '@provablehq/aleo-wallet-adaptor-react-ui';
-import { ShieldWalletAdapter } from '@provablehq/aleo-wallet-adaptor-shield';
-import { LeoWalletAdapter } from '@provablehq/aleo-wallet-adaptor-leo';
-import { Network } from '@provablehq/aleo-types';
-import { DecryptPermission } from '@provablehq/aleo-wallet-adaptor-core';
-
-import '@provablehq/aleo-wallet-adaptor-react-ui/dist/styles.css';
-
-import { Header } from '@/components/Header';
-import { SchedulePage } from '@/pages/SchedulePage';
+import { useState } from 'react';
+import { Layout } from './components/layout/Layout';
+import { Dashboard } from './components/dashboard/Dashboard';
+import { TaskCreation } from './components/tasks/TaskCreation';
 
 function App() {
+  // Simple state router for demo purposes
+  const [currentView, setCurrentView] = useState<'dashboard' | 'create'>('dashboard');
+
   return (
-    <BrowserRouter>
-      <AleoWalletProvider
-        wallets={[new ShieldWalletAdapter(), new LeoWalletAdapter()]}
-        autoConnect={false}
-        network={Network.TESTNET}
-        decryptPermission={DecryptPermission.UponRequest}
-        programs={['automation_scheduled_transferv3.aleo', 'credits.aleo']}
-        onError={(error) => console.error(error.message)}
-      >
-        <WalletModalProvider>
-          <div className="min-h-screen bg-zkperp-dark">
-            <Header />
-            <Routes>
-              <Route path="/" element={<SchedulePage />} />
-            </Routes>
-          </div>
-        </WalletModalProvider>
-      </AleoWalletProvider>
-    </BrowserRouter>
+    <Layout>
+      {/* View Switcher Header */}
+      <div className="flex justify-end gap-4 mb-8">
+        <button 
+          onClick={() => setCurrentView('dashboard')}
+          className={`font-mono text-sm tracking-widest uppercase transition-colors ${currentView === 'dashboard' ? 'text-cyan-400 font-bold' : 'text-zinc-500 hover:text-zinc-300'}`}
+        >
+          [ Dashboard ]
+        </button>
+        <button 
+          onClick={() => setCurrentView('create')}
+          className={`font-mono text-sm tracking-widest uppercase transition-colors ${currentView === 'create' ? 'text-cyan-400 font-bold' : 'text-zinc-500 hover:text-zinc-300'}`}
+        >
+          [ New Task ]
+        </button>
+      </div>
+
+      {currentView === 'dashboard' ? <Dashboard /> : <TaskCreation />}
+    </Layout>
   );
 }
 

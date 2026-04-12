@@ -7,14 +7,22 @@ export default {
   theme: {
     extend: {
       colors: {
-        'zkperp': {
-          'dark': '#0a0e17',
-          'card': '#111827',
-          'border': '#1f2937',
-          'green': '#22c55e',
-          'red': '#ef4444',
-          'accent': '#6366f1',
-        }
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+      },
+      fontFamily: {
+        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", 'monospace'],
       }
     },
   },

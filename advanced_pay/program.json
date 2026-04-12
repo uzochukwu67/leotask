@@ -1,0 +1,21 @@
+{
+  "program": "advanced_pay.aleo",
+  "version": "0.1.0",
+  "description": "Recurring payments, conditional transfers, and multi-party escrow on Aleo",
+  "license": "MIT",
+  "leo": "4.0.0",
+  "dependencies": [
+    {
+      "name": "credits.aleo",
+      "location": "network",
+      "path": null,
+      "edition": 1
+    },
+    {
+      "name": "test_usdcx_stablecoin.aleo",
+      "location": "network",
+      "path": null,
+      "edition": 1
+    }
+  ]
+}
